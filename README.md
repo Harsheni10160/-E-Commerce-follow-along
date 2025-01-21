@@ -27,3 +27,4 @@ Authentication ensures only the right people can access certain features. For ex
 -It keeps the app secure by verifying users' identities.
 
 # -E-Commerce-follow-along
+# -E-Commerce-follow-along
