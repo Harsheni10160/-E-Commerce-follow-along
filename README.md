@@ -53,6 +53,5 @@ The main feature developed in this milestone is the **Login Page**:
 
 
 # -E-Commerce-follow-along
-# -E-Commerce-follow-along
 
 
