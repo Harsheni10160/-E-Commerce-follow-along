@@ -29,3 +29,5 @@ Authentication ensures only the right people can access certain features. For ex
 # -E-Commerce-follow-along
 # -E-Commerce-follow-along
 
+## Milestone 3 :
+set up dedicated folders for organizing backend code effectively.Initialized and configured a Node.js server to handle API requests.Connected the application to MongoDB to store and manage data.Implemented basic error handling error handling to ensure smooth server operation
