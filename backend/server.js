@@ -1,3 +1,4 @@
+
 const app =require("./app");
 const connectDatabase = require("./db/Database");
 process.on("uncaughtException",(err) =>{
@@ -25,4 +26,4 @@ process.on("unhandledRejection",(err) => {
     server.close(() => {
         process.exit(1);
     });
-});
+})
