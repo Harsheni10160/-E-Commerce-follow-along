@@ -66,3 +66,12 @@ In this milestone, I created a backend signup API that securely stores user data
 ## 🌟  Milestone 7:
 In this milestone, we completed user login authentication by validating credentials and comparing encrypted passwords using bcrypt. This process involves retrieving user data, hashing the entered password, and matching it with the stored hash. If authenticated, access is granted; otherwise, an error is returned. This enhances security and protects user data.
 
+🌟 Milestone 8
+In this milestone, we created a reusable product card component and designed a homepage to display multiple cards dynamically. The component receives product details as props and is rendered using array mapping. This improves UI consistency, enhances user experience, and maintains an organized layout for showcasing products effectively. 🚀
+
+🌟 Milestone 9
+In this milestone, we created a product page for the e-commerce website. The page displays a list of products with their details, including images, names, descriptions, and prices. Users can click on a product to view more information or add it to their cart. This page provides a user-friendly interface for browsing and selecting products.
+
+🌟 Milestone 10
+In this milestone, we created an API to allow product creation with image uploads using Multer. The images are stored in the uploads/ directory, and product data, including image paths, is saved to MongoDB for efficient storage and retrieval.
+
