@@ -1,8 +1,10 @@
+
 const express = require("express");
 const app = express();
 const ErrorHandler = require('./utils/ErrorHandler'); 
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+
 const cors = require("cors")
 app.use(cors())
 app.use(express.json());
@@ -16,7 +18,10 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 }
 
 const user = require("./controller/user");
+const productRoutes = require("./controller/product")
 app.use("/api/v2/user", user);
+app.use("/api/products", productRoutes);
+app.use("/uploads", express.static("uploads"));
 
 app.use(ErrorHandler);
 
