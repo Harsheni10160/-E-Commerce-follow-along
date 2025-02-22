@@ -4,16 +4,13 @@ const fs = require("fs");
 const User = require("../model/user");
 const router = express.Router();
 const { upload } = require("../multer");
-const ErrorHandler = require("../utils/ErrorHandler");
-const catchAsyncErrors = require("../middleware/catchAsynErrors");
+const ErrorHandler = require("../utlis/errorHandler");
+const CatchAsynErrors = require("../middleware/CatchAsynErrors");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
-
-
-router.post("/create-user", upload.single("file"), catchAsyncErrors(async (req, res, next) => {
+router.post("/create-user", upload.single("file"), CatchAsynErrors(async (req, res, next) => {
     console.log("Creating user...");
     const { name, email, password } = req.body;
-
     const userEmail = await User.findOne({ email });
     if (userEmail) {
         if (req.file) {
@@ -27,7 +24,6 @@ router.post("/create-user", upload.single("file"), catchAsyncErrors(async (req, 
         }
         return next(new ErrorHandler("User already exists", 400));
     }
-
     let fileUrl = "";
     if (req.file) {
         fileUrl = path.join("uploads", req.file.filename);
@@ -47,7 +43,7 @@ router.post("/create-user", upload.single("file"), catchAsyncErrors(async (req, 
     res.status(201).json({ success: true, user });
 }));
 
-router.post("/login", catchAsyncErrors(async (req, res, next) => {
+router.post("/login", CatchAsynErrors(async (req, res, next) => {
     console.log("Logging in user...");
     const { email, password } = req.body;
     if (!email || !password) {

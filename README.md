@@ -87,3 +87,16 @@ In this milestone, we implemented the Update Product functionality, allowing use
 
  ## 🌟 Milestone 14:
 This milestone focused on integrating the Delete Product functionality, allowing users to remove products permanently. A confirmation prompt ensures accidental deletions are avoided
+
+## ⭐ Milestone 15: Navbar Component
+Features:
+- Brand Logo
+- Navigation Links: Home, Products, My Products, Cart, Login/Logout
+- Responsive Design
+
+## ⭐ Milestone 16: Product Info Page
+Features:
+- Product Details Display
+- Quantity Selection
+- Add to Cart Button
+- Responsive Design
