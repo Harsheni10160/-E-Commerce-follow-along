@@ -9,11 +9,15 @@ import MyProducts from './pages/MyProducts';
 // import cart from './pages/cart';
 import Cart from './pages/cart';
 import ProductDetails from './pages/ProductsDetails';
+import Profile from './pages/profile';
+import CreateAddress from './pages/createAddress';
 
 
 
 const App = () => {
   return (
+    <>
+    {/* <h1 className='text-red-400'>Hi</h1> */}
     <BrowserRouter>
       <Routes>
 
@@ -25,9 +29,13 @@ const App = () => {
         <Route path="/myproducts" element={<MyProducts />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/createaddress" element={<CreateAddress />} />
+
         
       </Routes>
     </BrowserRouter>
+    </>
   );
 };
 

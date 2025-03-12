@@ -1,3 +1,4 @@
+
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
@@ -5,12 +6,15 @@ const User = require("../model/user");
 const router = express.Router();
 const { upload } = require("../multer");
 const ErrorHandler = require("../utlis/errorHandler");
-const CatchAsynErrors = require("../middleware/CatchAsynErrors");
+const catchAsyncErrors = require("../middleware/CatchAsynErrors");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
-router.post("/create-user", upload.single("file"), CatchAsynErrors(async (req, res, next) => {
+
+
+router.post("/create-user", upload.single("file"), catchAsyncErrors(async (req, res, next) => {
     console.log("Creating user...");
     const { name, email, password } = req.body;
+
     const userEmail = await User.findOne({ email });
     if (userEmail) {
         if (req.file) {
@@ -24,6 +28,7 @@ router.post("/create-user", upload.single("file"), CatchAsynErrors(async (req, r
         }
         return next(new ErrorHandler("User already exists", 400));
     }
+
     let fileUrl = "";
     if (req.file) {
         fileUrl = path.join("uploads", req.file.filename);
@@ -43,7 +48,7 @@ router.post("/create-user", upload.single("file"), CatchAsynErrors(async (req, r
     res.status(201).json({ success: true, user });
 }));
 
-router.post("/login", CatchAsynErrors(async (req, res, next) => {
+router.post("/login", catchAsyncErrors(async (req, res, next) => {
     console.log("Logging in user...");
     const { email, password } = req.body;
     if (!email || !password) {
@@ -64,5 +69,66 @@ router.post("/login", CatchAsynErrors(async (req, res, next) => {
         user,
     });
 }));
+router.get(
+  "/profile",
+  catchAsyncErrors(async (req, res, next) => {
+    const { email } = req.query;
+    if (!email) {
+      return next(new ErrorHandler("Please provide an email", 400));
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+    res.status(200).json({
+      success: true,
+      user: {
+        name: user.name,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        avatarUrl: user.avatar.url,
+      },
+      addresses: user.addresses,
 
+      // {
+      //     "success": true,
+      //     "user": {
+      //         "name": "a",
+      //         "email":"a@example.com",
+      //         "phoneNumber": "1234567890",
+      //         "avatarUrl": "https://example.com/avatar.jpg"
+      //     },
+      //     "addresses": ["Address 1", "Address 2"]
+      // }
+    });
+    console.log(user.avatarUrl);
+  })
+);
+
+    router.post("/add-address", catchAsyncErrors(async (req, res, next) => {
+        const { country, city, address1, address2, zipCode, addressType, email } = req.body;
+    
+        const user = await User.findOne({ email });
+    
+        if (!user) {
+            return next(new ErrorHandler("User not found", 404));
+        }
+    
+        const newAddress = {
+            country,
+            city,
+            address1,
+            address2,
+            zipCode,
+            addressType,
+        };
+    
+        user.addresses.push(newAddress);
+        await user.save();
+    
+        res.status(201).json({
+            success: true,
+            addresses: user.addresses,
+        });
+    }));
 module.exports = router;
