@@ -1,13 +1,15 @@
 import CartProduct from '../components/cartProduct';
 import Nav from '../components/navbar';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 const Cart = () => {
 
     const [products, setProducts] = useState([]);
-
+    const navigate = useNavigate()
     useEffect(() => {
-        fetch(`http://localhost:8000/api/v2/product/cartproducts?email=${'devaharsheni2006@gmail.com'}`)
+        fetch(`http://localhost:8000/api/v2/product/cartproducts?email=${'abhisa8888@gmail.com'}`)
           .then((res) => {
             if (!res.ok) {
               throw new Error(`HTTP error! status: ${res.status}`);
@@ -18,6 +20,24 @@ const Cart = () => {
             setProducts(data.cart.map(product => ({quantity: product['quantity'], ...product['productId']})));
             console.log("Products fetched:", data.cart);
           })
+
+          // {
+          //   "quantity": 2,
+          //   "productId": {
+          //     "_id": "123",
+          //     "name": "Laptop",   //product.productId.name
+          //     "price": 50000
+          //   }
+          // }
+
+          // into:
+
+          // {
+          //   "quantity": 2,
+          //   "_id": "123",
+          //   "name": "Laptop",   //product.name
+          //   "price": 50000
+          // }
           
           .catch((err) => {
             console.error(" Error fetching products:", err);
@@ -26,6 +46,9 @@ const Cart = () => {
     
       console.log("Products:", products);
 
+     const handlePlaceOrder= () => {
+      navigate('/select-address')
+     }
     return (
         <div className='w-full h-screen'>
             <Nav />
@@ -40,6 +63,14 @@ const Cart = () => {
                                 <CartProduct key={product._id} {...product} />
                             ))
                         }
+                    </div>
+                    <div className='w-full flex p-4 justify-end'>
+                         <button 
+                         onClick={handlePlaceOrder}
+                         className='bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-700'
+                         >
+                           Place Order
+                         </button>
                     </div>
                 </div>
             </div>
