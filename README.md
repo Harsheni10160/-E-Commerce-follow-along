@@ -219,8 +219,17 @@ Welcome to the *Ecommerce Follow Along Project*! This hands-on project focuses o
 - Displays **ordered products**, **selected address**, and **total price details**.
 
 ## ⭐ Milestone 25: Created an endpoint :
--Built an endpoint "orders" in backend.
--Displays the product which is received by the endpoint.
+- Built an endpoint "orders" in backend.
+- Displays the product which is received by the endpoint.
+
+## ⭐ Milestone 26: Create an backend endpoint for place order
+- Create an endpoint that will receive the user mail.
+- With the help of  the  mail we  need to retrive the _id of the user.
+- Using that _id we need to get all the orders of that user.
+
+
+
+
 
 
 This concludes the roadmap for our **Ecommerce Follow Along Project**! Happy coding! 🚀
