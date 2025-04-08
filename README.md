@@ -296,6 +296,22 @@ Today we will learn how to implement global state management using Redux.
    ```bash
    npm install react-redux @reduxjs/toolkit
 
+# 🌟 Milestone 32: Access Email Globally with Redux
+
+Welcome to Milestone 32! 🌟  
+Today, you’ll use Redux to store and access the user's email across all pages.
+
+## 🎯 Learning Goals:
+- Store user email in Redux during login.
+- Access email on any page using useSelector.
+
+## 📝 Steps:
+
+1. *Store Email on Login Page*
+   ```js
+   const dispatch = useDispatch();
+   dispatch(setEmail(emailInput));
+
 
 
 

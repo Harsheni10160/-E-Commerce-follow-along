@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Nav from '../components/navbar'
+import { useSelector } from 'react-redux';
 
 const MyOrdersPage = () => {
     const [orders, setOrders] = useState([]);
-    const email = 'devaharsheni2006@gmail.com';
+    // const email = 'devaharsheni2006@gmail.com';
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const email = useSelector((state) => state.user.email); // Get the email from Redux store
 
     const fetchOrders = async () => {
+        if (!email) return; // Ensure email is available before making the request
         try {
             setLoading(true);
             setError('');
@@ -40,7 +43,7 @@ const MyOrdersPage = () => {
 
     useEffect(() => {
         fetchOrders();
-    }, []);
+    }, [email]);
 
     return (
         <>
