@@ -263,6 +263,24 @@ By the end of this milestone, you will:
 5. Store transaction details in your database for future reference.
 
 
+## 🌟 Milestone 30: Implement PayPal Payments in Frontend
+
+This is a continuation of Milestone 29 where you set up your PayPal account and acquired the Client ID.
+
+### 🎯 Learning Goals:
+- Learn how to use the PayPal API in a React app.
+- Understand how to integrate online payments using PayPal.
+
+### 📝 Steps for Milestone 30:
+
+1. *Use Your Sandbox Client ID*
+   - Get your *Client ID* from the PayPal Developer Dashboard (Sandbox mode).
+
+2. *Install react-paypal-js*
+   ```bash
+   npm install @paypal/react-paypal-js
+
+
 
 
 
