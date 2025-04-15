@@ -8,7 +8,7 @@ const ErrorHandler = require("../utlis/errorHandler");
 const catchAsyncErrors = require("../middleware/CatchAsynErrors");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
-
+const jwt = require("jsonwebtoken");
 
 router.post("/create-user", upload.single("file"), catchAsyncErrors(async (req, res, next) => {
     console.log("Creating user...");
@@ -62,6 +62,22 @@ router.post("/login", catchAsyncErrors(async (req, res, next) => {
     if (!isPasswordMatched) {
         return next(new ErrorHandler("Invalid Email or Password", 401));
     }
+
+    // Generate JWT token
+    const token = jwt.sign(
+        { id:user._id, email:user.email },
+        process.env.JWT_SECRET || "your_jwt_secret",
+        { expiresIn: "1h" }
+    );
+
+    // Set  token in an HttpOnly cookie
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge:3600000,
+    });
+
     user.password = undefined;
     res.status(200).json({
         success: true,

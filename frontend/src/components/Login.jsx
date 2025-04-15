@@ -5,6 +5,7 @@ import { setemail } from "../store/userActions";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+axios.defaults.withCredentials = true;
 
 const Login = () => {
     const dispatch = useDispatch();
