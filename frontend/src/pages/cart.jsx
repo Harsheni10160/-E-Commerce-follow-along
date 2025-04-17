@@ -2,6 +2,7 @@ import CartProduct from '../components/cartProduct';
 import Nav from '../components/navbar';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from '../axiosConfig';
 
 
 const Cart = () => {
@@ -9,13 +10,17 @@ const Cart = () => {
     const [products, setProducts] = useState([]);
     const navigate = useNavigate()
     useEffect(() => {
-        fetch(`http://localhost:8000/api/v2/product/cartproducts?email=${'abhisa8888@gmail.com'}`)
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            return res.json();
-          })
+      if(!email) return;
+
+      axios.get(`/api/v2/product/cartproducts?email=${email}`), {}
+
+        // fetch(`http://localhost:8000/api/v2/product/cartproducts?email=${'abhisa8888@gmail.com'}`)
+          // .then((res) => {
+            // if (!res.ok) {
+              // throw new Error(`HTTP error! status: ${res.status}`);
+            // }
+            // return res.json();
+          // })
           .then((data) => {
             setProducts(data.cart.map(product => ({quantity: product['quantity'], ...product['productId']})));
             console.log("Products fetched:", data.cart);

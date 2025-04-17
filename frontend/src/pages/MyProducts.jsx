@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import MyProduct from "../components/MyProducts/myproduct";
 import NavBar from "../components/navbar"
 import { useSelector } from "react-redux";
+import axios from "../axiosConfig";
 export default function MyProducts() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -14,13 +15,14 @@ export default function MyProducts() {
 
     useEffect(() => {
         if (!email) return;
-        fetch(`http://localhost:8000/api/v2/product/my-products?email=${email}`)
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
-                }
-                return res.json();
-            })
+        axios.get(`/api/v2/product/my-products?email=${email}`)
+        // fetch(`http://localhost:8000/api/v2/product/my-products?email=${email}`)
+        //     .then((res) => {
+        //         if (!res.ok) {
+        //             throw new Error(`HTTP error! status: ${res.status}`);
+        //         }
+        //         return res.json();
+        //     })
             .then((data) => {
                 setProducts(data.products);
                 setLoading(false);

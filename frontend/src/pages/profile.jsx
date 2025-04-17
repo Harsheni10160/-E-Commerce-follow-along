@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AddressCard from "../components/AddressCard";
 import NavBar from "../components/navbar";
 import { useSelector } from "react-redux";
+import axois from "../axiosConfig";
 
 export default function Profile() {
 	const email = useSelector((state) => state.user.email); // Get the email from Redux store
@@ -18,18 +19,19 @@ export default function Profile() {
 
 	useEffect(() => {
 		if (!email) return;
-		fetch(
-			`http://localhost:8000/api/v2/user/profile?email=${"devaharsheni2006@gmail.com"}`,
-			{
-				method: "GET",
-			}
-		)
-			.then((res) => {
-				if (!res.ok) {
-					throw new Error(`HTTP error! status: ${res.status}`);
-				}
-				return res.json();
-			})
+		// fetch(
+		// 	`http://localhost:8000/api/v2/user/profile?email=${"devaharsheni2006@gmail.com"}`,
+		// 	{
+		// 		method: "GET",
+		// 	}
+		// )
+		// 	.then((res) => {
+		// 		if (!res.ok) {
+		// 			throw new Error(`HTTP error! status: ${res.status}`);
+		// 		}
+		// 		return res.json();
+		// 	})
+		axios.get("api/v2/user/profile",{params:{email}})
 			.then((data) => {
 				setPersonalDetails(data.user);
 				setAddresses(data.addresses);

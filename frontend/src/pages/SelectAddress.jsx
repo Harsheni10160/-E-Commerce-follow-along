@@ -1,59 +1,58 @@
-// SelectAddress.jsx
 import React, { useState, useEffect } from 'react';
-import Nav from '../components/navbar'; 
+import NavBar from '../components/auth/nav'; // Ensure the path is correct and component name matches
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
+import axios from '../axiosConfig';
+import { useSelector } from 'react-redux'; // Import useSelector from react-redux
 
 const SelectAddress = () => {
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-
-    const userEmail = 'devaharsheni2006@gmail.com'; 
-
-
+    
+    const userEmail = useSelector((state) => state.user.email);
     useEffect(() => {
+        // Only fetch addresses if email exists
         if (!userEmail) return;
+    //     const response = await fetch(http://localhost:8000/api/v2/user/addresses?email=${encodeURIComponent(userEmail)});
 
-        const fetchAddresses = async () => {
-            try {
-                const response = await fetch(`http://localhost:8000/api/v2/user/addresses?email=${encodeURIComponent(userEmail)}`);
+    //     if (!response.ok) {
+    //         if (response.status === 404) {
+    //             throw new Error('User not found.');
+    //         } else if (response.status === 400) {
+    //             throw new Error('Bad request. Email parameter is missing.');
+    //         } else {
+    //             throw new Error(HTTP error! status: ${response.status});
+    //         }
+    //     }
 
-                if (!response.ok) {
-                    if (response.status === 404) {
-                        throw new Error('User not found.');
-                    } else if (response.status === 400) {
-                        throw new Error('Bad request. Email parameter is missing.');
-                    } else {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                }
+    //     const data = await response.json();
 
-                const data = await response.json();
-
-                if (data && Array.isArray(data.addresses)) {
-                    setAddresses(data.addresses);
+    //     if (data && Array.isArray(data.addresses)) {
+    //         setAddresses(data.addresses);
+    //     } else {
+    //         setAddresses([]);
+    //         console.warn('Unexpected response structure:', data);
+    //     }
+    // } 
+            axios.get('/api/v2/user/addresses', { params: { email: userEmail } })
+             .then((res) => {
+                 if (res.data && Array.isArray(res.data.addresses)) {
+                     setAddresses(res.data.addresses);
                 } else {
                     setAddresses([]);
-                    console.warn('Unexpected response structure:', data);
                 }
-            } catch (err) {
+            }) .catch ((err) => {
                 console.error('Error fetching addresses:', err);
-                setError(err.message || 'An unexpected error occurred.');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchAddresses();
-    }, [userEmail]);
-
+                setError(err.response?.data?.message || err.message || 'An unexpected error occurred.');
+            }) .finally (() =>setLoading(false));
+        }, [userEmail]);
+        
     const handleSelectAddress = (addressId) => {
+        // Navigate to Order Confirmation with the selected address ID and email
         navigate('/order-confirmation', { state: { addressId, email: userEmail } });
     };
-
+    // Render loading state
     if (loading) {
         return (
             <div className='w-full h-screen flex justify-center items-center'>
@@ -61,7 +60,7 @@ const SelectAddress = () => {
             </div>
         );
     }
-
+    // Render error state
     if (error) {
         return (
             <div className='w-full h-screen flex flex-col justify-center items-center'>
@@ -75,10 +74,9 @@ const SelectAddress = () => {
             </div>
         );
     }
-
     return (
         <div className='w-full min-h-screen flex flex-col'>
-            <Nav />
+            <NavBar />
             <div className='flex-grow flex justify-center items-center p-4'>
                 <div className='w-full max-w-4xl border border-neutral-300 rounded-md flex flex-col p-6 bg-white shadow-md'>
                     <h2 className='text-2xl font-semibold mb-6 text-center'>Select Shipping Address</h2>
@@ -113,5 +111,4 @@ const SelectAddress = () => {
         </div>
     );
 };
-
 export default SelectAddress;

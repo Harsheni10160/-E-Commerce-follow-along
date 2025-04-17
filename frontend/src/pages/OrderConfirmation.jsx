@@ -1,6 +1,6 @@
 // OrderConfirmation.jsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig';
 import Nav from '../components/navbar';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -30,7 +30,7 @@ const OrderConfirmation = () => {
 
         const fetchData = async () => {
             try {
-                const addressResponse = await axios.get('http://localhost:5000/api/v2/user/addresses', {
+                const addressResponse = await axios.get('/api/v2/user/addresses', {
                     params: { email: email },
                 });
 
@@ -45,7 +45,7 @@ const OrderConfirmation = () => {
                 }
                 setSelectedAddress(address);
 
-                const cartResponse = await axios.get('http://localhost:5000/api/v2/product/cartproducts', {
+                const cartResponse = await axios.get('/api/v2/product/cartproducts', {
                     params: { email: email },
                 });
 
@@ -170,7 +170,7 @@ const handlePlaceOrder = async (paymentType = 'cod', paypalOrderData = null) => 
             };
 
             // Send POST request to place orders
-            const response = await axios.post('http://localhost:5000/api/v2/orders/place-order', payload);
+            const response = await axios.post('/api/v2/orders/place-order', payload);
             console.log('Orders placed successfully:', response.data);
 
             navigate('/order-success'); 
