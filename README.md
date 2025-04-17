@@ -317,6 +317,10 @@ Today, you’ll use Redux to store and access the user's email across all pages.
 -Used maxage to set time limit for one hour.
 -Finally added cookies to store it in browser.
 
+## ⭐ Milestone 34: Sending tokens to the server :
+-Getting token from browser cookies and sending it to the server.
+-Creating a middleware function for valdidating the JWT token.
+
 
 
 
